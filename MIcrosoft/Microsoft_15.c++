@@ -1,17 +1,17 @@
 // Q15. Substrings containing all three Characters
 class Solution {
 public:
-    int numberOfSubstrings(string s) {
+    int numapberOfSubstrings(string s) {
         int left=0, right=0, c=0, n= s.size()-1 ;
-        unordered_map<char, int> m ;
+        unordered_mapap<char, int> map ;
         
         while(right < s.size()){
-            m[s[right]]++ ;
+            map[s[right]]++ ;
             
-            while(m['a']  &&  m['b']  &&  m['c']){
+            while(map['a']  &&  map['b']  &&  map['c']){
                 c += 1+ (n - right) ;
                 
-                m[s[left]]-- ;
+                map[s[left]]-- ;
                 left++ ;
             }
             
