@@ -1,25 +1,62 @@
-//Q5. split array into subsequences
+class Solution {
 public:
-    bool isPossible(vector<int>& nums) {
-        vector<int> cnt (2001, 0);
-        for (int& n : nums) cnt[n + 1000]++;
+    vector<string> invalidTransactions(vector<string>& transactions) {
         
-        for (int i = 0; i <= 1998; i++) {
-            if (cnt[i] == 0) continue;
-            while (cnt[i]) {
-                int c = 0;
-                while (cnt[i+c] <= cnt[i+c+1]) {
-                    cnt[i+c]--;
-                    c++;
-                }
+        vector<string>name;
+        vector<int>time;
+        vector<int>amount;
+        vector<string>city;
+        vector<string>res;
+        int f=0;
+        
+        for(auto str:transactions){
+            stringstream ss(str);
+            string st;
             
-                cnt[i+c]--;
-                c++;
-                if (c < 3) return false;
+            while(getline(ss,st,',')){
+                if(f==0){
+                    name.emplace_back(st);
+                    f=1;
+                }
+                else if(f==1){
+                    time.emplace_back(stoi(st));
+                    f=2;
+                }
+                else if(f==2){
+                    amount.emplace_back(stoi(st));
+                    f=3;                    
+                }
+                else if(f==3){
+                    city.emplace_back(st);
+                    f=0;                    
+                }
+            }                    
+        }
+        
+		
+        int j=0;
+        for(auto it:amount){
+            if(it>1000){
+                res.emplace_back(transactions[j]);                
+            }
+            j++;
+        }
+        
+        for(int i=0;i<transactions.size();i++){
+            for(int j=0;j<transactions.size();j++){
+                if(name[i]==name[j] && city[i]!=city[j]){
+                    if(abs(time[i]-time[j])<=60){
+                        if(amount[i]<=1000){
+                            res.emplace_back(transactions[i]);
+                            break;
+                        }
+                    }
+                }
             }
         }
-        if (cnt[1999] or cnt[2000]) return false;
-        
-        return true;
+		
+        return res;
     }
 };
+
+
