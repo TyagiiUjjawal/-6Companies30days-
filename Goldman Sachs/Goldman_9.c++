@@ -1,25 +1,33 @@
-//Q5. split array into subsequences
+class Solution {
 public:
-    bool isPossible(vector<int>& nums) {
-        vector<int> cnt (2001, 0);
-        for (int& n : nums) cnt[n + 1000]++;
-        
-        for (int i = 0; i <= 1998; i++) {
-            if (cnt[i] == 0) continue;
-            while (cnt[i]) {
-                int c = 0;
-                while (cnt[i+c] <= cnt[i+c+1]) {
-                    cnt[i+c]--;
-                    c++;
+    int findMaximizedCapital(int k, int w, vector<int>& profits, vector<int>& capital) {
+        priority_queue<int>q;
+        int i=0;
+        vector<pair<int, int>>v;
+        for(int i=0; i<profits.size(); i++){
+            v.push_back({capital[i], profits[i]});
+        }
+        sort(v.begin(), v.end());
+        while(i<v.size() && k){
+            if(w>=v[i].first){
+                q.push(v[i].second);
+                i++;
+            }
+            else{
+                if(q.empty()){
+                    return w;
                 }
-            
-                cnt[i+c]--;
-                c++;
-                if (c < 3) return false;
+                else{
+                    w+=q.top();
+                    q.pop();
+                    k--;
+                }
             }
         }
-        if (cnt[1999] or cnt[2000]) return false;
-        
-        return true;
+        while(k-- && !q.empty()){
+            w+=q.top();
+            q.pop();
+        }
+        return w;
     }
 };
