@@ -1,25 +1,38 @@
-//Q5. split array into subsequences
+class Solution {
 public:
-    bool isPossible(vector<int>& nums) {
-        vector<int> cnt (2001, 0);
-        for (int& n : nums) cnt[n + 1000]++;
-        
-        for (int i = 0; i <= 1998; i++) {
-            if (cnt[i] == 0) continue;
-            while (cnt[i]) {
-                int c = 0;
-                while (cnt[i+c] <= cnt[i+c+1]) {
-                    cnt[i+c]--;
-                    c++;
-                }
+
+    vector<int> finalVector;
+    int maxfinal = 0;
+
+    void solve(vector<int>& aliceArrows, vector<int> &bobArrows, int maxx, int numArrows, int ind){
             
-                cnt[i+c]--;
-                c++;
-                if (c < 3) return false;
+        if(numArrows == 0 || ind < 0){
+            if(maxfinal<maxx){
+                maxfinal = maxx;
+                finalVector = bobArrows;
             }
+            return;
         }
-        if (cnt[1999] or cnt[2000]) return false;
-        
-        return true;
+        if(ind == 0){
+            bobArrows[ind] = numArrows;
+            solve(aliceArrows, bobArrows, maxx+ind, 0, ind-1);
+            bobArrows[ind] = 0;
+            return;
+        }
+        else if(numArrows>= (aliceArrows[ind]+1)){
+            bobArrows[ind] = aliceArrows[ind]+1;
+            solve(aliceArrows, bobArrows, maxx+ind,numArrows-(aliceArrows[ind]+1),ind-1);
+            bobArrows[ind] = 0;
+        }
+        solve(aliceArrows, bobArrows, maxx, numArrows, ind-1);
+
+    }
+
+    vector<int> maximumBobPoints(int numArrows, vector<int>& aliceArrows) {
+        vector<int> bobArrows;
+        for(int i=0;i<12;i++)
+            bobArrows.push_back(0);
+        solve(aliceArrows, bobArrows, 0, numArrows, 11);
+        return finalVector;
     }
 };
