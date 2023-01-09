@@ -2,6 +2,7 @@
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "typeinfo": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "random": "cpp"
     }
 }
