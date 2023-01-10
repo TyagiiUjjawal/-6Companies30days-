@@ -1,25 +1,49 @@
-//Q5. split array into subsequences
+class Solution {
 public:
-    bool isPossible(vector<int>& nums) {
-        vector<int> cnt (2001, 0);
-        for (int& n : nums) cnt[n + 1000]++;
+    void inorder(TreeNode *root , vector<int> &inorderVal){
+        if(root == NULL)
+            return ;
         
-        for (int i = 0; i <= 1998; i++) {
-            if (cnt[i] == 0) continue;
-            while (cnt[i]) {
-                int c = 0;
-                while (cnt[i+c] <= cnt[i+c+1]) {
-                    cnt[i+c]--;
-                    c++;
-                }
-            
-                cnt[i+c]--;
-                c++;
-                if (c < 3) return false;
+        inorder(root->left , inorderVal);
+        inorderVal.push_back(root->val);
+        inorder(root->right , inorderVal);
+        
+    }
+    
+    vector<int> mergeArrays(vector<int> &a , vector<int> &b){
+        vector<int> ans(a.size() + b.size());
+        
+        int i = 0 , j = 0 , k = 0;
+        
+        while(i < a.size() && j < b.size()){
+            if(a[i] < b[j]){
+                ans[k++] = a[i];
+                i++;
+            }
+            else{
+                ans[k++] = b[j];
+                j++;
             }
         }
-        if (cnt[1999] or cnt[2000]) return false;
         
-        return true;
+        while(i < a.size()){
+            ans[k++] = a[i];
+            i++;
+        }
+        
+        while(j < b.size()){
+            ans[k++] = b[j];
+            j++;
+        }
+        return ans;
+    }
+    
+    vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
+        vector<int> in1 , in2;
+        inorder(root1 , in1);
+        inorder(root2 , in2);
+        
+        vector<int> ans = mergeArrays(in1 , in2);
+        return ans;
     }
 };

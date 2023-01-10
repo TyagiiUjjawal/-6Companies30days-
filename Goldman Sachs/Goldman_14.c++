@@ -1,25 +1,26 @@
-//Q5. split array into subsequences
+class Solution {
 public:
-    bool isPossible(vector<int>& nums) {
-        vector<int> cnt (2001, 0);
-        for (int& n : nums) cnt[n + 1000]++;
-        
-        for (int i = 0; i <= 1998; i++) {
-            if (cnt[i] == 0) continue;
-            while (cnt[i]) {
-                int c = 0;
-                while (cnt[i+c] <= cnt[i+c+1]) {
-                    cnt[i+c]--;
-                    c++;
-                }
-            
-                cnt[i+c]--;
-                c++;
-                if (c < 3) return false;
-            }
+    int rev(int n){
+        int rem=0;
+        int ans=0;
+        while(n!=0){
+        rem=n%10;
+        ans=ans*10+rem;
+        n=n/10;
+
         }
-        if (cnt[1999] or cnt[2000]) return false;
+        return ans;
         
-        return true;
+    }
+    int countNicePairs(vector<int>& nms) {
+        unordered_map<int,int> m;     
+        int res=0;
+        for(int i=0;i<nms.size();i++)
+        {
+            int temp=nms[i]-rev(nms[i]);        
+            m[temp]++;
+            res=(res+m[temp]-1)%1000000007;   
+        }
+        return res%1000000007;
     }
 };
