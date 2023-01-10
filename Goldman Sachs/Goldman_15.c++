@@ -1,25 +1,40 @@
-//Q5. split array into subsequences
+class Solution {
 public:
-    bool isPossible(vector<int>& nums) {
-        vector<int> cnt (2001, 0);
-        for (int& n : nums) cnt[n + 1000]++;
+    int ans = 0;
+    int n = 0;
+    
+    bool istrue(string& str, vector<vector<int>>& statements){
         
-        for (int i = 0; i <= 1998; i++) {
-            if (cnt[i] == 0) continue;
-            while (cnt[i]) {
-                int c = 0;
-                while (cnt[i+c] <= cnt[i+c+1]) {
-                    cnt[i+c]--;
-                    c++;
+        for(int i=0; i<n; i++){
+            if(str[i] == '1'){ 
+                for(int j=0; j<n; j++){
+                    if(statements[i][j] != 2 && statements[i][j] != str[j] - '0') return false;
                 }
-            
-                cnt[i+c]--;
-                c++;
-                if (c < 3) return false;
             }
         }
-        if (cnt[1999] or cnt[2000]) return false;
         
         return true;
     }
+    int maximumGood(vector<vector<int>>& statements) {
+        n = statements.size();
+        string str = "";
+        dfs(statements, str, 0, 0);
+        return ans;
+    }
+    
+    void dfs(vector<vector<int>>& statements, string& str, int x, int goodPersonCount){
+        if(x == n){
+            if(istrue(str, statements)) ans = max(goodPersonCount, ans);
+            return;
+        }
+        
+        str.push_back('1');
+        dfs(statements, str, x+1, goodPersonCount+1);
+        
+        str.back() = '0';
+        dfs(statements, str, x+1, goodPersonCount);
+        
+        str.pop_back();
+    }
+    
 };
