@@ -11,31 +11,31 @@ public:
     }
     
     vector<int> mergeArrays(vector<int> &a , vector<int> &b){
-        vector<int> ans(a.size() + b.size());
+        vector<int> res(a.size() + b.size());
         
         int i = 0 , j = 0 , k = 0;
         
         while(i < a.size() && j < b.size()){
             if(a[i] < b[j]){
-                ans[k++] = a[i];
+                res[k++] = a[i];
                 i++;
             }
             else{
-                ans[k++] = b[j];
+                res[k++] = b[j];
                 j++;
             }
         }
         
         while(i < a.size()){
-            ans[k++] = a[i];
+            res[k++] = a[i];
             i++;
         }
         
         while(j < b.size()){
-            ans[k++] = b[j];
+            res[k++] = b[j];
             j++;
         }
-        return ans;
+        return res;
     }
     
     vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
@@ -43,7 +43,7 @@ public:
         inorder(root1 , in1);
         inorder(root2 , in2);
         
-        vector<int> ans = mergeArrays(in1 , in2);
-        return ans;
+        vector<int> res = mergeArrays(in1 , in2);
+        return res;
     }
 };
