@@ -2,10 +2,10 @@ class Solution {
 public:
    int findKthNumber(int n, int k)
     {
-        int ans = 1;
+        int result = 1;
         for(--k; k > 0; )
         {            int count = 0;
-            for (long long first = static_cast<long long>(ans), last = first + 1;
+            for (long long first = static_cast<long long>(result), last = first + 1;
                 first <= n; 
                 first *= 10, last *= 10) 
             {
@@ -14,15 +14,15 @@ public:
             
             if (k >= count)
             {   
-                ++ans;
+                ++result;
                 k -= count;
             }
             else
             {   
-                ans *= 10;
+                result *= 10;
                 --k;
             }
         }
-        return ans;
+        return result;
     }
 };
