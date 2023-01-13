@@ -1,6 +1,6 @@
 class Solution {
 public:
-
+    // dp[i] contains answer for 2^i
     vector <int> dp;
     int fun(int n) {
         if (n <= 2) return n+1;
