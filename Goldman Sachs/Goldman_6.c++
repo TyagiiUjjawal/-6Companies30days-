@@ -1,11 +1,11 @@
-//Minimum Consecutive Cards to Pick Up
+//Minimum Consecutive card to Pick Up
 class Solution {
 public:
-    int minimumCardPickup(vector<int>& cards) {
+    int minimumCardPickup(vector<int>& card) {
         map<int, vector<int>>m;
         int anss=1e9;
-        for(int i=0; i<cards.size(); i++){
-            m[cards[i]].push_back(i);
+        for(int i=0; i<card.size(); i++){
+            m[card[i]].push_back(i);
         }
         for(auto it: m){
           
